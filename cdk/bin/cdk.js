@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+require("source-map-support/register");
+const cdk = require("aws-cdk-lib");
+const ecs_fargate_stack_1 = require("../lib/ecs-fargate-stack");
+const app = new cdk.App();
+new ecs_fargate_stack_1.EcsFargateStack(app, 'ExpressAppStack', {
+    env: { region: 'ap-northeast-1' },
+});
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY2RrLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiY2RrLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7OztBQUNBLHVDQUFxQztBQUNyQyxtQ0FBbUM7QUFDbkMsZ0VBQTJEO0FBRTNELE1BQU0sR0FBRyxHQUFHLElBQUksR0FBRyxDQUFDLEdBQUcsRUFBRSxDQUFDO0FBQzFCLElBQUksbUNBQWUsQ0FBQyxHQUFHLEVBQUUsaUJBQWlCLEVBQUU7SUFDMUMsR0FBRyxFQUFFLEVBQUMsTUFBTSxFQUFFLGdCQUFnQixFQUFDO0NBQ2hDLENBQUMsQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbIiMhL3Vzci9iaW4vZW52IG5vZGVcbmltcG9ydCAnc291cmNlLW1hcC1zdXBwb3J0L3JlZ2lzdGVyJztcbmltcG9ydCAqIGFzIGNkayBmcm9tICdhd3MtY2RrLWxpYic7XG5pbXBvcnQgeyBFY3NGYXJnYXRlU3RhY2sgfSBmcm9tICcuLi9saWIvZWNzLWZhcmdhdGUtc3RhY2snO1xuXG5jb25zdCBhcHAgPSBuZXcgY2RrLkFwcCgpO1xubmV3IEVjc0ZhcmdhdGVTdGFjayhhcHAsICdFeHByZXNzQXBwU3RhY2snLCB7XG4gIGVudjoge3JlZ2lvbjogJ2FwLW5vcnRoZWFzdC0xJ30sXG59KTsgIl19

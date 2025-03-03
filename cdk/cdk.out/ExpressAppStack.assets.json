@@ -1,0 +1,52 @@
+{
+  "version": "39.0.0",
+  "files": {
+    "7fa1e366ee8a9ded01fc355f704cff92bfd179574e6f9cfee800a3541df1b200": {
+      "source": {
+        "path": "asset.7fa1e366ee8a9ded01fc355f704cff92bfd179574e6f9cfee800a3541df1b200",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "current_account-ap-northeast-1": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-ap-northeast-1",
+          "objectKey": "7fa1e366ee8a9ded01fc355f704cff92bfd179574e6f9cfee800a3541df1b200.zip",
+          "region": "ap-northeast-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-ap-northeast-1"
+        }
+      }
+    },
+    "db826bfc728560128d81b224900b8d0104d28fafa64fb09f78e7727bd9b4399f": {
+      "source": {
+        "path": "ExpressAppStack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "current_account-ap-northeast-1": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-ap-northeast-1",
+          "objectKey": "db826bfc728560128d81b224900b8d0104d28fafa64fb09f78e7727bd9b4399f.json",
+          "region": "ap-northeast-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-ap-northeast-1"
+        }
+      }
+    }
+  },
+  "dockerImages": {
+    "05eaae7d60bb74de910e3851229e5f884f6d3156157cf39c12ffd20ccccc7056": {
+      "source": {
+        "directory": "asset.05eaae7d60bb74de910e3851229e5f884f6d3156157cf39c12ffd20ccccc7056",
+        "dockerBuildArgs": {
+          "PLATFORM": "linux/amd64"
+        },
+        "platform": "linux/amd64"
+      },
+      "destinations": {
+        "current_account-ap-northeast-1": {
+          "repositoryName": "cdk-hnb659fds-container-assets-${AWS::AccountId}-ap-northeast-1",
+          "imageTag": "05eaae7d60bb74de910e3851229e5f884f6d3156157cf39c12ffd20ccccc7056",
+          "region": "ap-northeast-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-image-publishing-role-${AWS::AccountId}-ap-northeast-1"
+        }
+      }
+    }
+  }
+}

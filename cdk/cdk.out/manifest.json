@@ -1,0 +1,753 @@
+{
+  "version": "39.0.0",
+  "artifacts": {
+    "ExpressAppStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "ExpressAppStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "ExpressAppStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/ap-northeast-1",
+      "properties": {
+        "templateFile": "ExpressAppStack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-ap-northeast-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-ap-northeast-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-ap-northeast-1/db826bfc728560128d81b224900b8d0104d28fafa64fb09f78e7727bd9b4399f.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "ExpressAppStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-ap-northeast-1",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "ExpressAppStack.assets"
+      ],
+      "metadata": {
+        "/ExpressAppStack/ServerlessApmDemoVpc": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "maxAzs": "*",
+              "natGateways": "*",
+              "vpcName": "*"
+            }
+          }
+        ],
+        "/ExpressAppStack/ServerlessApmDemoVpc/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServerlessApmDemoVpcD6D29CBF"
+          }
+        ],
+        "/ExpressAppStack/ServerlessApmDemoVpc/PublicSubnet1": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "availabilityZone": "*",
+              "vpcId": "*",
+              "cidrBlock": "*",
+              "mapPublicIpOnLaunch": true,
+              "ipv6CidrBlock": "*",
+              "assignIpv6AddressOnCreation": "*"
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "availabilityZone": "*",
+              "vpcId": "*",
+              "cidrBlock": "*",
+              "mapPublicIpOnLaunch": true,
+              "ipv6CidrBlock": "*",
+              "assignIpv6AddressOnCreation": "*"
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {}
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addNatGateway": [
+                "*"
+              ]
+            }
+          }
+        ],
+        "/ExpressAppStack/ServerlessApmDemoVpc/PublicSubnet1/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServerlessApmDemoVpcPublicSubnet1SubnetD656516B"
+          }
+        ],
+        "/ExpressAppStack/ServerlessApmDemoVpc/PublicSubnet1/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServerlessApmDemoVpcPublicSubnet1RouteTable36C0E81B"
+          }
+        ],
+        "/ExpressAppStack/ServerlessApmDemoVpc/PublicSubnet1/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServerlessApmDemoVpcPublicSubnet1RouteTableAssociation93F86C0D"
+          }
+        ],
+        "/ExpressAppStack/ServerlessApmDemoVpc/PublicSubnet1/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServerlessApmDemoVpcPublicSubnet1DefaultRoute1292E43E"
+          }
+        ],
+        "/ExpressAppStack/ServerlessApmDemoVpc/PublicSubnet1/EIP": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServerlessApmDemoVpcPublicSubnet1EIPBDDEC5CA"
+          }
+        ],
+        "/ExpressAppStack/ServerlessApmDemoVpc/PublicSubnet1/NATGateway": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServerlessApmDemoVpcPublicSubnet1NATGatewayBD2949A2"
+          }
+        ],
+        "/ExpressAppStack/ServerlessApmDemoVpc/PublicSubnet2": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "availabilityZone": "*",
+              "vpcId": "*",
+              "cidrBlock": "*",
+              "mapPublicIpOnLaunch": true,
+              "ipv6CidrBlock": "*",
+              "assignIpv6AddressOnCreation": "*"
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "availabilityZone": "*",
+              "vpcId": "*",
+              "cidrBlock": "*",
+              "mapPublicIpOnLaunch": true,
+              "ipv6CidrBlock": "*",
+              "assignIpv6AddressOnCreation": "*"
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {}
+          }
+        ],
+        "/ExpressAppStack/ServerlessApmDemoVpc/PublicSubnet2/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServerlessApmDemoVpcPublicSubnet2Subnet8868C471"
+          }
+        ],
+        "/ExpressAppStack/ServerlessApmDemoVpc/PublicSubnet2/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServerlessApmDemoVpcPublicSubnet2RouteTableD1D9E363"
+          }
+        ],
+        "/ExpressAppStack/ServerlessApmDemoVpc/PublicSubnet2/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServerlessApmDemoVpcPublicSubnet2RouteTableAssociation4AC83696"
+          }
+        ],
+        "/ExpressAppStack/ServerlessApmDemoVpc/PublicSubnet2/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServerlessApmDemoVpcPublicSubnet2DefaultRoute07AD0D09"
+          }
+        ],
+        "/ExpressAppStack/ServerlessApmDemoVpc/PrivateSubnet1": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "availabilityZone": "*",
+              "vpcId": "*",
+              "cidrBlock": "*",
+              "mapPublicIpOnLaunch": false,
+              "ipv6CidrBlock": "*",
+              "assignIpv6AddressOnCreation": "*"
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "availabilityZone": "*",
+              "vpcId": "*",
+              "cidrBlock": "*",
+              "mapPublicIpOnLaunch": false,
+              "ipv6CidrBlock": "*",
+              "assignIpv6AddressOnCreation": "*"
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {}
+          }
+        ],
+        "/ExpressAppStack/ServerlessApmDemoVpc/PrivateSubnet1/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServerlessApmDemoVpcPrivateSubnet1SubnetCA163000"
+          }
+        ],
+        "/ExpressAppStack/ServerlessApmDemoVpc/PrivateSubnet1/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServerlessApmDemoVpcPrivateSubnet1RouteTableBD2F521C"
+          }
+        ],
+        "/ExpressAppStack/ServerlessApmDemoVpc/PrivateSubnet1/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServerlessApmDemoVpcPrivateSubnet1RouteTableAssociationEA48C552"
+          }
+        ],
+        "/ExpressAppStack/ServerlessApmDemoVpc/PrivateSubnet1/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServerlessApmDemoVpcPrivateSubnet1DefaultRoute6F4177DA"
+          }
+        ],
+        "/ExpressAppStack/ServerlessApmDemoVpc/PrivateSubnet2": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "availabilityZone": "*",
+              "vpcId": "*",
+              "cidrBlock": "*",
+              "mapPublicIpOnLaunch": false,
+              "ipv6CidrBlock": "*",
+              "assignIpv6AddressOnCreation": "*"
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "availabilityZone": "*",
+              "vpcId": "*",
+              "cidrBlock": "*",
+              "mapPublicIpOnLaunch": false,
+              "ipv6CidrBlock": "*",
+              "assignIpv6AddressOnCreation": "*"
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {}
+          }
+        ],
+        "/ExpressAppStack/ServerlessApmDemoVpc/PrivateSubnet2/Subnet": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServerlessApmDemoVpcPrivateSubnet2SubnetF4D65CFE"
+          }
+        ],
+        "/ExpressAppStack/ServerlessApmDemoVpc/PrivateSubnet2/RouteTable": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServerlessApmDemoVpcPrivateSubnet2RouteTable0FF109F2"
+          }
+        ],
+        "/ExpressAppStack/ServerlessApmDemoVpc/PrivateSubnet2/RouteTableAssociation": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServerlessApmDemoVpcPrivateSubnet2RouteTableAssociation737EEBE0"
+          }
+        ],
+        "/ExpressAppStack/ServerlessApmDemoVpc/PrivateSubnet2/DefaultRoute": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServerlessApmDemoVpcPrivateSubnet2DefaultRouteFA8326AD"
+          }
+        ],
+        "/ExpressAppStack/ServerlessApmDemoVpc/IGW": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServerlessApmDemoVpcIGW2AB6A98C"
+          }
+        ],
+        "/ExpressAppStack/ServerlessApmDemoVpc/VPCGW": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServerlessApmDemoVpcVPCGW1B587AFE"
+          }
+        ],
+        "/ExpressAppStack/ServerlessApmDemoVpc/RestrictDefaultSecurityGroupCustomResource": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": "*"
+          }
+        ],
+        "/ExpressAppStack/ServerlessApmDemoVpc/RestrictDefaultSecurityGroupCustomResource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ServerlessApmDemoVpcRestrictDefaultSecurityGroupCustomResourceF6C9973F"
+          }
+        ],
+        "/ExpressAppStack/Custom::VpcRestrictDefaultSGCustomResourceProvider": [
+          {
+            "type": "aws:cdk:is-custom-resource-handler-customResourceProvider",
+            "data": true
+          }
+        ],
+        "/ExpressAppStack/Custom::VpcRestrictDefaultSGCustomResourceProvider/Role": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0"
+          }
+        ],
+        "/ExpressAppStack/Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E"
+          }
+        ],
+        "/ExpressAppStack/ExpressAppCluster": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "vpc": "*",
+              "clusterName": "*"
+            }
+          }
+        ],
+        "/ExpressAppStack/ExpressAppCluster/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExpressAppClusterED5D6AA3"
+          }
+        ],
+        "/ExpressAppStack/ExpressAppTask": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": "*"
+          },
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": "*"
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": "*"
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": "*"
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": "*"
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": "*"
+          }
+        ],
+        "/ExpressAppStack/ExpressAppTask/TaskRole": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "assumedBy": {
+                "principalAccount": "*",
+                "assumeRoleAction": "*"
+              }
+            }
+          }
+        ],
+        "/ExpressAppStack/ExpressAppTask/TaskRole/ImportTaskRole": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": "*"
+          }
+        ],
+        "/ExpressAppStack/ExpressAppTask/TaskRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExpressAppTaskTaskRole6DF0B619"
+          }
+        ],
+        "/ExpressAppStack/ExpressAppTask/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExpressAppTaskA1E4995D"
+          }
+        ],
+        "/ExpressAppStack/ExpressAppTask/ExpressAppContainer/LogGroup": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "retention": "*"
+            }
+          }
+        ],
+        "/ExpressAppStack/ExpressAppTask/ExpressAppContainer/LogGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExpressAppTaskExpressAppContainerLogGroup3581B871"
+          }
+        ],
+        "/ExpressAppStack/ExpressAppTask/ExecutionRole": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "assumedBy": {
+                "principalAccount": "*",
+                "assumeRoleAction": "*"
+              },
+              "roleName": "*"
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addToPrincipalPolicy": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "attachInlinePolicy": [
+                "*"
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "attachInlinePolicy": [
+                "*"
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addToPrincipalPolicy": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addToPrincipalPolicy": [
+                {}
+              ]
+            }
+          }
+        ],
+        "/ExpressAppStack/ExpressAppTask/ExecutionRole/ImportExecutionRole": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": "*"
+          }
+        ],
+        "/ExpressAppStack/ExpressAppTask/ExecutionRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExpressAppTaskExecutionRoleFAD7A354"
+          }
+        ],
+        "/ExpressAppStack/ExpressAppTask/ExecutionRole/DefaultPolicy": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": "*"
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "attachToRole": [
+                "*"
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "attachToRole": [
+                "*"
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addStatements": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addStatements": [
+                {}
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addStatements": [
+                {}
+              ]
+            }
+          }
+        ],
+        "/ExpressAppStack/ExpressAppTask/ExecutionRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExpressAppTaskExecutionRoleDefaultPolicy13B9DA50"
+          }
+        ],
+        "/ExpressAppStack/ALBSecurityGroup": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "vpc": "*",
+              "allowAllOutbound": true,
+              "description": "*"
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addIngressRule": [
+                {
+                  "canInlineRule": true,
+                  "connections": "*",
+                  "uniqueId": "*"
+                },
+                {},
+                "*"
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addIngressRule": [
+                {
+                  "canInlineRule": true,
+                  "connections": "*",
+                  "uniqueId": "*"
+                },
+                {},
+                "*",
+                false
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addEgressRule": [
+                "*",
+                {},
+                "*",
+                true
+              ]
+            }
+          }
+        ],
+        "/ExpressAppStack/ALBSecurityGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ALBSecurityGroup29A3BDEF"
+          }
+        ],
+        "/ExpressAppStack/ExpressAppALB": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": "*"
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": "*"
+          }
+        ],
+        "/ExpressAppStack/ExpressAppALB/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExpressAppALB7616E316"
+          }
+        ],
+        "/ExpressAppStack/ExpressAppALB/AlbListener": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": "*"
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": "*"
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": "*"
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": "*"
+          }
+        ],
+        "/ExpressAppStack/ExpressAppALB/AlbListener/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExpressAppALBAlbListener4863BE7B"
+          }
+        ],
+        "/ExpressAppStack/ExpressAppALB/AlbListener/FargateTargetGroupGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExpressAppALBAlbListenerFargateTargetGroupGroupC27B494A"
+          }
+        ],
+        "/ExpressAppStack/ExpressAppSecurityGroup": [
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": {
+              "vpc": "*",
+              "allowAllOutbound": true,
+              "description": "*"
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addIngressRule": [
+                {
+                  "canInlineRule": true,
+                  "connections": "*",
+                  "uniqueId": "*"
+                },
+                {},
+                "*"
+              ]
+            }
+          },
+          {
+            "type": "aws:cdk:analytics:method",
+            "data": {
+              "addIngressRule": [
+                "*",
+                {},
+                "*",
+                false
+              ]
+            }
+          }
+        ],
+        "/ExpressAppStack/ExpressAppSecurityGroup/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExpressAppSecurityGroup1F704147"
+          }
+        ],
+        "/ExpressAppStack/ExpressAppSecurityGroup/from ExpressAppStackALBSecurityGroup398877F0:3000": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExpressAppSecurityGroupfromExpressAppStackALBSecurityGroup398877F03000EDE15492"
+          }
+        ],
+        "/ExpressAppStack/ExpressAppService": [
+          {
+            "type": "aws:cdk:warning",
+            "data": "minHealthyPercent has not been configured so the default value of 50% is used. The number of running tasks will decrease below the desired count during deployments etc. See https://github.com/aws/aws-cdk/issues/31705 [ack: @aws-cdk/aws-ecs:minHealthyPercent]",
+            "trace": [
+              "Annotations.addMessage (/Users/nevil.george/aws-projects/fargate-express-app/cdk/node_modules/aws-cdk-lib/core/lib/annotations.js:1:1608)",
+              "Annotations.addWarningV2 (/Users/nevil.george/aws-projects/fargate-express-app/cdk/node_modules/aws-cdk-lib/core/lib/annotations.js:1:825)",
+              "new BaseService (/Users/nevil.george/aws-projects/fargate-express-app/cdk/node_modules/aws-cdk-lib/aws-ecs/lib/base/base-service.js:1:8100)",
+              "new FargateService (/Users/nevil.george/aws-projects/fargate-express-app/cdk/node_modules/aws-cdk-lib/aws-ecs/lib/fargate/fargate-service.js:1:3551)",
+              "new EcsFargateStack (/Users/nevil.george/aws-projects/fargate-express-app/cdk/lib/ecs-fargate-stack.ts:87:21)",
+              "Object.<anonymous> (/Users/nevil.george/aws-projects/fargate-express-app/cdk/bin/cdk.ts:7:1)",
+              "Module._compile (node:internal/modules/cjs/loader:1469:14)",
+              "Module.m._compile (/Users/nevil.george/aws-projects/fargate-express-app/cdk/node_modules/ts-node/src/index.ts:1618:23)",
+              "Module._extensions..js (node:internal/modules/cjs/loader:1548:10)",
+              "Object.require.extensions.<computed> [as .ts] (/Users/nevil.george/aws-projects/fargate-express-app/cdk/node_modules/ts-node/src/index.ts:1621:12)",
+              "Module.load (node:internal/modules/cjs/loader:1288:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:1104:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:174:12)",
+              "phase4 (/Users/nevil.george/aws-projects/fargate-express-app/cdk/node_modules/ts-node/src/bin.ts:649:14)",
+              "bootstrap (/Users/nevil.george/aws-projects/fargate-express-app/cdk/node_modules/ts-node/src/bin.ts:95:10)",
+              "main (/Users/nevil.george/aws-projects/fargate-express-app/cdk/node_modules/ts-node/src/bin.ts:55:10)",
+              "Object.<anonymous> (/Users/nevil.george/aws-projects/fargate-express-app/cdk/node_modules/ts-node/src/bin.ts:800:3)",
+              "Module._compile (node:internal/modules/cjs/loader:1469:14)",
+              "Object.Module._extensions..js (node:internal/modules/cjs/loader:1548:10)",
+              "Module.load (node:internal/modules/cjs/loader:1288:32)",
+              "Function.Module._load (node:internal/modules/cjs/loader:1104:12)",
+              "Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:174:12)",
+              "node:internal/main/run_main_module:28:49"
+            ]
+          },
+          {
+            "type": "aws:cdk:analytics:construct",
+            "data": "*"
+          }
+        ],
+        "/ExpressAppStack/ExpressAppService/Service": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExpressAppService21CBEC83"
+          }
+        ],
+        "/ExpressAppStack/Nev-ExpressFargateService": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "NevExpressFargateService"
+          }
+        ],
+        "/ExpressAppStack/LoadBalancerDNS": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LoadBalancerDNS"
+          }
+        ],
+        "/ExpressAppStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/ExpressAppStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/ExpressAppStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "ExpressAppStack"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}

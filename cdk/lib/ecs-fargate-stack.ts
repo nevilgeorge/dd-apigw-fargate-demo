@@ -1,0 +1,119 @@
+import * as apigateway from 'aws-cdk-lib/aws-apigateway';
+import * as cdk from 'aws-cdk-lib';
+import * as ec2 from 'aws-cdk-lib/aws-ec2';
+import * as ecs from 'aws-cdk-lib/aws-ecs';
+import * as elbv2 from 'aws-cdk-lib/aws-elasticloadbalancingv2';
+import { Construct } from 'constructs';
+
+// TODO: Change this to your IP address but leave `/32` at the end
+// Find your IP at https://checkip.amazonaws.com)
+const MY_IP_ADDRESS = '64.124.12.19/32';
+
+export class EcsFargateStack extends cdk.Stack {
+  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+    super(scope, id, props);
+
+    // Create VPC
+    const vpc = new ec2.Vpc(this, 'ServerlessApmDemoVpc', {
+      maxAzs: 2,
+      natGateways: 1,
+      vpcName: 'serverless-apm-demo-vpc',
+    });
+
+    // Create ECS Cluster
+    const cluster = new ecs.Cluster(this, 'ExpressAppCluster', {
+      vpc,
+      clusterName: 'nev-express-app-cluster',
+    });
+
+    // Create Task Definition
+    const taskDefinition = new ecs.FargateTaskDefinition(this, 'ExpressAppTask', {
+      memoryLimitMiB: 512,
+      cpu: 256,
+    });
+
+    // Add container to task definition
+    const container = taskDefinition.addContainer('ExpressAppContainer', {
+      image: ecs.ContainerImage.fromAsset('../app', {
+        buildArgs: {
+            PLATFORM: 'linux/amd64'
+        },
+        platform: cdk.aws_ecr_assets.Platform.LINUX_AMD64,
+      }),
+      environment: {
+        NODE_ENV: 'production',
+      },
+      logging: ecs.LogDrivers.awsLogs({ streamPrefix: 'Nev-ExpressApp' }),
+    });
+
+    container.addPortMappings({
+      containerPort: 3000,
+    });
+
+    // Create Security Group for ALB
+    const albSecurityGroup = new ec2.SecurityGroup(this, 'ALBSecurityGroup', {
+      vpc,
+      allowAllOutbound: true,
+      description: 'Security group for ALB',
+    });
+
+    // Allow inbound HTTP (port 80) traffic to the ALB
+    // Only allow traffic from my IP address because the AWS sandbox removes Security Group Rules that are too public.
+    albSecurityGroup.addIngressRule(ec2.Peer.ipv4(MY_IP_ADDRESS), ec2.Port.tcp(80), 'Allow HTTP traffic');
+
+    // Create Application Load Balancer (ALB)
+    const loadBalancer = new elbv2.ApplicationLoadBalancer(this, 'ExpressAppALB', {
+      vpc,
+      internetFacing: true,
+      securityGroup: albSecurityGroup, // Attach the ALB security group
+    });
+
+    // Create a Listener on the ALB
+    const listener = loadBalancer.addListener('AlbListener', {
+      port: 80, // HTTP Listener
+      open: true,
+    });
+
+    // Create Security Group for Fargate Service
+    const serviceSecurityGroup = new ec2.SecurityGroup(this, 'ExpressAppSecurityGroup', {
+        vpc,
+        allowAllOutbound: true,
+        description: 'Express App Security Group',
+    }); 
+    
+    serviceSecurityGroup.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(3000), 'Allow Express App traffic');
+
+    // Create Fargate Service
+    const service = new ecs.FargateService(this, 'ExpressAppService', {
+      cluster,
+      taskDefinition,
+      desiredCount: 1,
+      assignPublicIp: true,
+      securityGroups: [serviceSecurityGroup],
+    });
+
+    // Attach Fargate Service to the ALB Target Group
+    listener.addTargets('FargateTargetGroup', {
+      port: 3000, // Forward requests to container
+      protocol: elbv2.ApplicationProtocol.HTTP,
+      targets: [service],
+      healthCheck: {
+        path: '/health', // Change this if your health check route is different
+        interval: cdk.Duration.seconds(30),
+      },
+    });
+
+    // Output the task public IP
+    new cdk.CfnOutput(this, 'Nev-ExpressFargateService', {
+      value: service.serviceName,
+      description: 'Name of the Fargate service',
+    });
+
+    // Output the ALB DNS Name
+    new cdk.CfnOutput(this, 'LoadBalancerDNS', {
+      value: loadBalancer.loadBalancerDnsName,
+      description: 'Application Load Balancer DNS Name',
+    });
+  }
+} 
+

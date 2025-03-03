@@ -1,0 +1,1004 @@
+{
+ "Resources": {
+  "ServerlessApmDemoVpcD6D29CBF": {
+   "Type": "AWS::EC2::VPC",
+   "Properties": {
+    "CidrBlock": "10.0.0.0/16",
+    "EnableDnsHostnames": true,
+    "EnableDnsSupport": true,
+    "InstanceTenancy": "default",
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "serverless-apm-demo-vpc"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/ServerlessApmDemoVpc/Resource"
+   }
+  },
+  "ServerlessApmDemoVpcPublicSubnet1SubnetD656516B": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": {
+     "Fn::Select": [
+      0,
+      {
+       "Fn::GetAZs": ""
+      }
+     ]
+    },
+    "CidrBlock": "10.0.0.0/18",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Public"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "Name",
+      "Value": "ExpressAppStack/ServerlessApmDemoVpc/PublicSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "ServerlessApmDemoVpcD6D29CBF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/ServerlessApmDemoVpc/PublicSubnet1/Subnet"
+   }
+  },
+  "ServerlessApmDemoVpcPublicSubnet1RouteTable36C0E81B": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "ExpressAppStack/ServerlessApmDemoVpc/PublicSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "ServerlessApmDemoVpcD6D29CBF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/ServerlessApmDemoVpc/PublicSubnet1/RouteTable"
+   }
+  },
+  "ServerlessApmDemoVpcPublicSubnet1RouteTableAssociation93F86C0D": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "ServerlessApmDemoVpcPublicSubnet1RouteTable36C0E81B"
+    },
+    "SubnetId": {
+     "Ref": "ServerlessApmDemoVpcPublicSubnet1SubnetD656516B"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/ServerlessApmDemoVpc/PublicSubnet1/RouteTableAssociation"
+   }
+  },
+  "ServerlessApmDemoVpcPublicSubnet1DefaultRoute1292E43E": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "ServerlessApmDemoVpcIGW2AB6A98C"
+    },
+    "RouteTableId": {
+     "Ref": "ServerlessApmDemoVpcPublicSubnet1RouteTable36C0E81B"
+    }
+   },
+   "DependsOn": [
+    "ServerlessApmDemoVpcVPCGW1B587AFE"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/ServerlessApmDemoVpc/PublicSubnet1/DefaultRoute"
+   }
+  },
+  "ServerlessApmDemoVpcPublicSubnet1EIPBDDEC5CA": {
+   "Type": "AWS::EC2::EIP",
+   "Properties": {
+    "Domain": "vpc",
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "ExpressAppStack/ServerlessApmDemoVpc/PublicSubnet1"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/ServerlessApmDemoVpc/PublicSubnet1/EIP"
+   }
+  },
+  "ServerlessApmDemoVpcPublicSubnet1NATGatewayBD2949A2": {
+   "Type": "AWS::EC2::NatGateway",
+   "Properties": {
+    "AllocationId": {
+     "Fn::GetAtt": [
+      "ServerlessApmDemoVpcPublicSubnet1EIPBDDEC5CA",
+      "AllocationId"
+     ]
+    },
+    "SubnetId": {
+     "Ref": "ServerlessApmDemoVpcPublicSubnet1SubnetD656516B"
+    },
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "ExpressAppStack/ServerlessApmDemoVpc/PublicSubnet1"
+     }
+    ]
+   },
+   "DependsOn": [
+    "ServerlessApmDemoVpcPublicSubnet1DefaultRoute1292E43E",
+    "ServerlessApmDemoVpcPublicSubnet1RouteTableAssociation93F86C0D"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/ServerlessApmDemoVpc/PublicSubnet1/NATGateway"
+   }
+  },
+  "ServerlessApmDemoVpcPublicSubnet2Subnet8868C471": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": {
+     "Fn::Select": [
+      1,
+      {
+       "Fn::GetAZs": ""
+      }
+     ]
+    },
+    "CidrBlock": "10.0.64.0/18",
+    "MapPublicIpOnLaunch": true,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Public"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Public"
+     },
+     {
+      "Key": "Name",
+      "Value": "ExpressAppStack/ServerlessApmDemoVpc/PublicSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "ServerlessApmDemoVpcD6D29CBF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/ServerlessApmDemoVpc/PublicSubnet2/Subnet"
+   }
+  },
+  "ServerlessApmDemoVpcPublicSubnet2RouteTableD1D9E363": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "ExpressAppStack/ServerlessApmDemoVpc/PublicSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "ServerlessApmDemoVpcD6D29CBF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/ServerlessApmDemoVpc/PublicSubnet2/RouteTable"
+   }
+  },
+  "ServerlessApmDemoVpcPublicSubnet2RouteTableAssociation4AC83696": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "ServerlessApmDemoVpcPublicSubnet2RouteTableD1D9E363"
+    },
+    "SubnetId": {
+     "Ref": "ServerlessApmDemoVpcPublicSubnet2Subnet8868C471"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/ServerlessApmDemoVpc/PublicSubnet2/RouteTableAssociation"
+   }
+  },
+  "ServerlessApmDemoVpcPublicSubnet2DefaultRoute07AD0D09": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "GatewayId": {
+     "Ref": "ServerlessApmDemoVpcIGW2AB6A98C"
+    },
+    "RouteTableId": {
+     "Ref": "ServerlessApmDemoVpcPublicSubnet2RouteTableD1D9E363"
+    }
+   },
+   "DependsOn": [
+    "ServerlessApmDemoVpcVPCGW1B587AFE"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/ServerlessApmDemoVpc/PublicSubnet2/DefaultRoute"
+   }
+  },
+  "ServerlessApmDemoVpcPrivateSubnet1SubnetCA163000": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": {
+     "Fn::Select": [
+      0,
+      {
+       "Fn::GetAZs": ""
+      }
+     ]
+    },
+    "CidrBlock": "10.0.128.0/18",
+    "MapPublicIpOnLaunch": false,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Private"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Private"
+     },
+     {
+      "Key": "Name",
+      "Value": "ExpressAppStack/ServerlessApmDemoVpc/PrivateSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "ServerlessApmDemoVpcD6D29CBF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/ServerlessApmDemoVpc/PrivateSubnet1/Subnet"
+   }
+  },
+  "ServerlessApmDemoVpcPrivateSubnet1RouteTableBD2F521C": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "ExpressAppStack/ServerlessApmDemoVpc/PrivateSubnet1"
+     }
+    ],
+    "VpcId": {
+     "Ref": "ServerlessApmDemoVpcD6D29CBF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/ServerlessApmDemoVpc/PrivateSubnet1/RouteTable"
+   }
+  },
+  "ServerlessApmDemoVpcPrivateSubnet1RouteTableAssociationEA48C552": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "ServerlessApmDemoVpcPrivateSubnet1RouteTableBD2F521C"
+    },
+    "SubnetId": {
+     "Ref": "ServerlessApmDemoVpcPrivateSubnet1SubnetCA163000"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/ServerlessApmDemoVpc/PrivateSubnet1/RouteTableAssociation"
+   }
+  },
+  "ServerlessApmDemoVpcPrivateSubnet1DefaultRoute6F4177DA": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "NatGatewayId": {
+     "Ref": "ServerlessApmDemoVpcPublicSubnet1NATGatewayBD2949A2"
+    },
+    "RouteTableId": {
+     "Ref": "ServerlessApmDemoVpcPrivateSubnet1RouteTableBD2F521C"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/ServerlessApmDemoVpc/PrivateSubnet1/DefaultRoute"
+   }
+  },
+  "ServerlessApmDemoVpcPrivateSubnet2SubnetF4D65CFE": {
+   "Type": "AWS::EC2::Subnet",
+   "Properties": {
+    "AvailabilityZone": {
+     "Fn::Select": [
+      1,
+      {
+       "Fn::GetAZs": ""
+      }
+     ]
+    },
+    "CidrBlock": "10.0.192.0/18",
+    "MapPublicIpOnLaunch": false,
+    "Tags": [
+     {
+      "Key": "aws-cdk:subnet-name",
+      "Value": "Private"
+     },
+     {
+      "Key": "aws-cdk:subnet-type",
+      "Value": "Private"
+     },
+     {
+      "Key": "Name",
+      "Value": "ExpressAppStack/ServerlessApmDemoVpc/PrivateSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "ServerlessApmDemoVpcD6D29CBF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/ServerlessApmDemoVpc/PrivateSubnet2/Subnet"
+   }
+  },
+  "ServerlessApmDemoVpcPrivateSubnet2RouteTable0FF109F2": {
+   "Type": "AWS::EC2::RouteTable",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "ExpressAppStack/ServerlessApmDemoVpc/PrivateSubnet2"
+     }
+    ],
+    "VpcId": {
+     "Ref": "ServerlessApmDemoVpcD6D29CBF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/ServerlessApmDemoVpc/PrivateSubnet2/RouteTable"
+   }
+  },
+  "ServerlessApmDemoVpcPrivateSubnet2RouteTableAssociation737EEBE0": {
+   "Type": "AWS::EC2::SubnetRouteTableAssociation",
+   "Properties": {
+    "RouteTableId": {
+     "Ref": "ServerlessApmDemoVpcPrivateSubnet2RouteTable0FF109F2"
+    },
+    "SubnetId": {
+     "Ref": "ServerlessApmDemoVpcPrivateSubnet2SubnetF4D65CFE"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/ServerlessApmDemoVpc/PrivateSubnet2/RouteTableAssociation"
+   }
+  },
+  "ServerlessApmDemoVpcPrivateSubnet2DefaultRouteFA8326AD": {
+   "Type": "AWS::EC2::Route",
+   "Properties": {
+    "DestinationCidrBlock": "0.0.0.0/0",
+    "NatGatewayId": {
+     "Ref": "ServerlessApmDemoVpcPublicSubnet1NATGatewayBD2949A2"
+    },
+    "RouteTableId": {
+     "Ref": "ServerlessApmDemoVpcPrivateSubnet2RouteTable0FF109F2"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/ServerlessApmDemoVpc/PrivateSubnet2/DefaultRoute"
+   }
+  },
+  "ServerlessApmDemoVpcIGW2AB6A98C": {
+   "Type": "AWS::EC2::InternetGateway",
+   "Properties": {
+    "Tags": [
+     {
+      "Key": "Name",
+      "Value": "serverless-apm-demo-vpc"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/ServerlessApmDemoVpc/IGW"
+   }
+  },
+  "ServerlessApmDemoVpcVPCGW1B587AFE": {
+   "Type": "AWS::EC2::VPCGatewayAttachment",
+   "Properties": {
+    "InternetGatewayId": {
+     "Ref": "ServerlessApmDemoVpcIGW2AB6A98C"
+    },
+    "VpcId": {
+     "Ref": "ServerlessApmDemoVpcD6D29CBF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/ServerlessApmDemoVpc/VPCGW"
+   }
+  },
+  "ServerlessApmDemoVpcRestrictDefaultSecurityGroupCustomResourceF6C9973F": {
+   "Type": "Custom::VpcRestrictDefaultSG",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E",
+      "Arn"
+     ]
+    },
+    "DefaultSecurityGroupId": {
+     "Fn::GetAtt": [
+      "ServerlessApmDemoVpcD6D29CBF",
+      "DefaultSecurityGroup"
+     ]
+    },
+    "Account": {
+     "Ref": "AWS::AccountId"
+    }
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/ServerlessApmDemoVpc/RestrictDefaultSecurityGroupCustomResource/Default"
+   }
+  },
+  "CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Version": "2012-10-17",
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ]
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Sub": "arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+     }
+    ],
+    "Policies": [
+     {
+      "PolicyName": "Inline",
+      "PolicyDocument": {
+       "Version": "2012-10-17",
+       "Statement": [
+        {
+         "Effect": "Allow",
+         "Action": [
+          "ec2:AuthorizeSecurityGroupIngress",
+          "ec2:AuthorizeSecurityGroupEgress",
+          "ec2:RevokeSecurityGroupIngress",
+          "ec2:RevokeSecurityGroupEgress"
+         ],
+         "Resource": [
+          {
+           "Fn::Join": [
+            "",
+            [
+             "arn:aws:ec2:ap-northeast-1:",
+             {
+              "Ref": "AWS::AccountId"
+             },
+             ":security-group/",
+             {
+              "Fn::GetAtt": [
+               "ServerlessApmDemoVpcD6D29CBF",
+               "DefaultSecurityGroup"
+              ]
+             }
+            ]
+           ]
+          }
+         ]
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/Custom::VpcRestrictDefaultSGCustomResourceProvider/Role"
+   }
+  },
+  "CustomVpcRestrictDefaultSGCustomResourceProviderHandlerDC833E5E": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-ap-northeast-1"
+     },
+     "S3Key": "7fa1e366ee8a9ded01fc355f704cff92bfd179574e6f9cfee800a3541df1b200.zip"
+    },
+    "Timeout": 900,
+    "MemorySize": 128,
+    "Handler": "__entrypoint__.handler",
+    "Role": {
+     "Fn::GetAtt": [
+      "CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs20.x",
+    "Description": "Lambda function for removing all inbound/outbound rules from the VPC default security group"
+   },
+   "DependsOn": [
+    "CustomVpcRestrictDefaultSGCustomResourceProviderRole26592FE0"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/Custom::VpcRestrictDefaultSGCustomResourceProvider/Handler",
+    "aws:asset:path": "asset.7fa1e366ee8a9ded01fc355f704cff92bfd179574e6f9cfee800a3541df1b200",
+    "aws:asset:property": "Code"
+   }
+  },
+  "ExpressAppClusterED5D6AA3": {
+   "Type": "AWS::ECS::Cluster",
+   "Properties": {
+    "ClusterName": "nev-express-app-cluster"
+   },
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/ExpressAppCluster/Resource"
+   }
+  },
+  "ExpressAppTaskTaskRole6DF0B619": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/ExpressAppTask/TaskRole/Resource"
+   }
+  },
+  "ExpressAppTaskA1E4995D": {
+   "Type": "AWS::ECS::TaskDefinition",
+   "Properties": {
+    "ContainerDefinitions": [
+     {
+      "Environment": [
+       {
+        "Name": "NODE_ENV",
+        "Value": "production"
+       }
+      ],
+      "Essential": true,
+      "Image": {
+       "Fn::Sub": "${AWS::AccountId}.dkr.ecr.ap-northeast-1.${AWS::URLSuffix}/cdk-hnb659fds-container-assets-${AWS::AccountId}-ap-northeast-1:05eaae7d60bb74de910e3851229e5f884f6d3156157cf39c12ffd20ccccc7056"
+      },
+      "LogConfiguration": {
+       "LogDriver": "awslogs",
+       "Options": {
+        "awslogs-group": {
+         "Ref": "ExpressAppTaskExpressAppContainerLogGroup3581B871"
+        },
+        "awslogs-stream-prefix": "Nev-ExpressApp",
+        "awslogs-region": "ap-northeast-1"
+       }
+      },
+      "Name": "ExpressAppContainer",
+      "PortMappings": [
+       {
+        "ContainerPort": 3000,
+        "Protocol": "tcp"
+       }
+      ]
+     }
+    ],
+    "Cpu": "256",
+    "ExecutionRoleArn": {
+     "Fn::GetAtt": [
+      "ExpressAppTaskExecutionRoleFAD7A354",
+      "Arn"
+     ]
+    },
+    "Family": "ExpressAppStackExpressAppTaskA3FD4EB8",
+    "Memory": "512",
+    "NetworkMode": "awsvpc",
+    "RequiresCompatibilities": [
+     "FARGATE"
+    ],
+    "TaskRoleArn": {
+     "Fn::GetAtt": [
+      "ExpressAppTaskTaskRole6DF0B619",
+      "Arn"
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/ExpressAppTask/Resource"
+   }
+  },
+  "ExpressAppTaskExpressAppContainerLogGroup3581B871": {
+   "Type": "AWS::Logs::LogGroup",
+   "UpdateReplacePolicy": "Retain",
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/ExpressAppTask/ExpressAppContainer/LogGroup/Resource"
+   }
+  },
+  "ExpressAppTaskExecutionRoleFAD7A354": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "ecs-tasks.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/ExpressAppTask/ExecutionRole/Resource"
+   }
+  },
+  "ExpressAppTaskExecutionRoleDefaultPolicy13B9DA50": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "ecr:BatchCheckLayerAvailability",
+        "ecr:BatchGetImage",
+        "ecr:GetDownloadUrlForLayer"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::Join": [
+         "",
+         [
+          "arn:aws:ecr:ap-northeast-1:",
+          {
+           "Ref": "AWS::AccountId"
+          },
+          ":repository/",
+          {
+           "Fn::Sub": "cdk-hnb659fds-container-assets-${AWS::AccountId}-ap-northeast-1"
+          }
+         ]
+        ]
+       }
+      },
+      {
+       "Action": "ecr:GetAuthorizationToken",
+       "Effect": "Allow",
+       "Resource": "*"
+      },
+      {
+       "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+       ],
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "ExpressAppTaskExpressAppContainerLogGroup3581B871",
+         "Arn"
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "ExpressAppTaskExecutionRoleDefaultPolicy13B9DA50",
+    "Roles": [
+     {
+      "Ref": "ExpressAppTaskExecutionRoleFAD7A354"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/ExpressAppTask/ExecutionRole/DefaultPolicy/Resource"
+   }
+  },
+  "ALBSecurityGroup29A3BDEF": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "Security group for ALB",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "SecurityGroupIngress": [
+     {
+      "CidrIp": "64.124.12.19/32",
+      "Description": "Allow HTTP traffic",
+      "FromPort": 80,
+      "IpProtocol": "tcp",
+      "ToPort": 80
+     },
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow from anyone on port 80",
+      "FromPort": 80,
+      "IpProtocol": "tcp",
+      "ToPort": 80
+     }
+    ],
+    "VpcId": {
+     "Ref": "ServerlessApmDemoVpcD6D29CBF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/ALBSecurityGroup/Resource"
+   }
+  },
+  "ExpressAppALB7616E316": {
+   "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+   "Properties": {
+    "LoadBalancerAttributes": [
+     {
+      "Key": "deletion_protection.enabled",
+      "Value": "false"
+     }
+    ],
+    "Scheme": "internet-facing",
+    "SecurityGroups": [
+     {
+      "Fn::GetAtt": [
+       "ALBSecurityGroup29A3BDEF",
+       "GroupId"
+      ]
+     }
+    ],
+    "Subnets": [
+     {
+      "Ref": "ServerlessApmDemoVpcPublicSubnet1SubnetD656516B"
+     },
+     {
+      "Ref": "ServerlessApmDemoVpcPublicSubnet2Subnet8868C471"
+     }
+    ],
+    "Type": "application"
+   },
+   "DependsOn": [
+    "ServerlessApmDemoVpcPublicSubnet1DefaultRoute1292E43E",
+    "ServerlessApmDemoVpcPublicSubnet1RouteTableAssociation93F86C0D",
+    "ServerlessApmDemoVpcPublicSubnet2DefaultRoute07AD0D09",
+    "ServerlessApmDemoVpcPublicSubnet2RouteTableAssociation4AC83696"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/ExpressAppALB/Resource"
+   }
+  },
+  "ExpressAppALBAlbListener4863BE7B": {
+   "Type": "AWS::ElasticLoadBalancingV2::Listener",
+   "Properties": {
+    "DefaultActions": [
+     {
+      "TargetGroupArn": {
+       "Ref": "ExpressAppALBAlbListenerFargateTargetGroupGroupC27B494A"
+      },
+      "Type": "forward"
+     }
+    ],
+    "LoadBalancerArn": {
+     "Ref": "ExpressAppALB7616E316"
+    },
+    "Port": 80,
+    "Protocol": "HTTP"
+   },
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/ExpressAppALB/AlbListener/Resource"
+   }
+  },
+  "ExpressAppALBAlbListenerFargateTargetGroupGroupC27B494A": {
+   "Type": "AWS::ElasticLoadBalancingV2::TargetGroup",
+   "Properties": {
+    "HealthCheckIntervalSeconds": 30,
+    "HealthCheckPath": "/health",
+    "Port": 3000,
+    "Protocol": "HTTP",
+    "TargetGroupAttributes": [
+     {
+      "Key": "stickiness.enabled",
+      "Value": "false"
+     }
+    ],
+    "TargetType": "ip",
+    "VpcId": {
+     "Ref": "ServerlessApmDemoVpcD6D29CBF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/ExpressAppALB/AlbListener/FargateTargetGroupGroup/Resource"
+   }
+  },
+  "ExpressAppSecurityGroup1F704147": {
+   "Type": "AWS::EC2::SecurityGroup",
+   "Properties": {
+    "GroupDescription": "Express App Security Group",
+    "SecurityGroupEgress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow all outbound traffic by default",
+      "IpProtocol": "-1"
+     }
+    ],
+    "SecurityGroupIngress": [
+     {
+      "CidrIp": "0.0.0.0/0",
+      "Description": "Allow Express App traffic",
+      "FromPort": 3000,
+      "IpProtocol": "tcp",
+      "ToPort": 3000
+     }
+    ],
+    "VpcId": {
+     "Ref": "ServerlessApmDemoVpcD6D29CBF"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/ExpressAppSecurityGroup/Resource"
+   }
+  },
+  "ExpressAppSecurityGroupfromExpressAppStackALBSecurityGroup398877F03000EDE15492": {
+   "Type": "AWS::EC2::SecurityGroupIngress",
+   "Properties": {
+    "Description": "Load balancer to target",
+    "FromPort": 3000,
+    "GroupId": {
+     "Fn::GetAtt": [
+      "ExpressAppSecurityGroup1F704147",
+      "GroupId"
+     ]
+    },
+    "IpProtocol": "tcp",
+    "SourceSecurityGroupId": {
+     "Fn::GetAtt": [
+      "ALBSecurityGroup29A3BDEF",
+      "GroupId"
+     ]
+    },
+    "ToPort": 3000
+   },
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/ExpressAppSecurityGroup/from ExpressAppStackALBSecurityGroup398877F0:3000"
+   }
+  },
+  "ExpressAppService21CBEC83": {
+   "Type": "AWS::ECS::Service",
+   "Properties": {
+    "Cluster": {
+     "Ref": "ExpressAppClusterED5D6AA3"
+    },
+    "DeploymentConfiguration": {
+     "MaximumPercent": 200,
+     "MinimumHealthyPercent": 50
+    },
+    "DesiredCount": 1,
+    "EnableECSManagedTags": false,
+    "HealthCheckGracePeriodSeconds": 60,
+    "LaunchType": "FARGATE",
+    "LoadBalancers": [
+     {
+      "ContainerName": "ExpressAppContainer",
+      "ContainerPort": 3000,
+      "TargetGroupArn": {
+       "Ref": "ExpressAppALBAlbListenerFargateTargetGroupGroupC27B494A"
+      }
+     }
+    ],
+    "NetworkConfiguration": {
+     "AwsvpcConfiguration": {
+      "AssignPublicIp": "ENABLED",
+      "SecurityGroups": [
+       {
+        "Fn::GetAtt": [
+         "ExpressAppSecurityGroup1F704147",
+         "GroupId"
+        ]
+       }
+      ],
+      "Subnets": [
+       {
+        "Ref": "ServerlessApmDemoVpcPublicSubnet1SubnetD656516B"
+       },
+       {
+        "Ref": "ServerlessApmDemoVpcPublicSubnet2Subnet8868C471"
+       }
+      ]
+     }
+    },
+    "TaskDefinition": {
+     "Ref": "ExpressAppTaskA1E4995D"
+    }
+   },
+   "DependsOn": [
+    "ExpressAppALBAlbListenerFargateTargetGroupGroupC27B494A",
+    "ExpressAppALBAlbListener4863BE7B",
+    "ExpressAppTaskTaskRole6DF0B619"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/ExpressAppService/Service"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/81V30/bMBD+W8jjZDLgAbS+lcJQJQRVi3hYVaGrfYSjjp35R1gX9X+fHCdNChuaNh76ECX+7u7zl7vz+SQ9PvuSHh3Aiz3kYnUoaZlWMwd8xeDFPlTIT9LqvuDzKsnhx/CnTQbJp4QlCtwVOHyBdYuUBb+BHOvVZsFGj+p+MmITv5TEZ36p0M2rBEogCUuS5NbftMIudiyab07CnEvNV806hyKSjItbdQ1e8adk4IxHllBRno5euYO1lKlxUZ4OhTBo7a0aGQRHWkVpbE9U1EKEuNkmMhnMk0/JYm8E7oeK2EqxgcLXVHuHd7CU2OEdNrRWc6oJts7h43I8Ca8u2WxiqASHH96ZjyDtHuT8/2Tsj5I9kRG7cKwcGoXbHoozrlkNnQP+lKNybIbcG3LrK6N9Ma+C2HYrKfXLUMpb75baK9EeDoGWGyp2/1yIscqCnqmXmAzmVcJBjZUkhRGJsVwrhTyEtqPYK/rusclPXc7tYPlYTlZntWW+7BMHa+MUKGufPc5DT27zT3Hu9Cv5BmgoNgy5TauR9Nah2ak3j9iri7HxZF/BZBAml11d4CMpCuJrKb956shdVzbSygEpND2sIZ2hKYnjvI1s1htGkKfVVEsMQ89an6M4XyeDKikMKU4FyCHn2ivXnQ6fYwgY8q4udRL/OZolRkvsshIrcqcnLclES+LhRqw2sV714Yo139q2xXzX+D7vn62LeIFIZBGOLdJsdqeD5Y2Gt7AQMwcOw1iwO9v+LVzLiApCn5kHsBadTS80X6EZ55CFSw9dsKVTLLQlp836HCzOF0zqzKbVtc7aUWTQoeoKUbO35g1DCdYRlxrEEiQoTiorT9JqWBSSeD0RrzWI89qGZt5vzb6B9QPIOlSd804/t8Z+wB2YDN32xPWWmw2botXexL5uWLx1Ou/jsXIN8Mo+MbokgSbkh9WJmznISGUh5ta7wrsNU1pg+mw/lydH6fFZenTwbIkOjVeOckyn8f0LNu9rTDoLAAA="
+   },
+   "Metadata": {
+    "aws:cdk:path": "ExpressAppStack/CDKMetadata/Default"
+   }
+  }
+ },
+ "Outputs": {
+  "NevExpressFargateService": {
+   "Description": "Name of the Fargate service",
+   "Value": {
+    "Fn::GetAtt": [
+     "ExpressAppService21CBEC83",
+     "Name"
+    ]
+   }
+  },
+  "LoadBalancerDNS": {
+   "Description": "Application Load Balancer DNS Name",
+   "Value": {
+    "Fn::GetAtt": [
+     "ExpressAppALB7616E316",
+     "DNSName"
+    ]
+   }
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}
