@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+require("dd-trace/init"); // Import and initialize Datadog APM before other imports.
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
@@ -12,10 +13,12 @@ app.use((0, cors_1.default)()); // Enable CORS
 app.use(express_1.default.json()); // Parse JSON bodies
 // Health check endpoint
 app.get('/health', (req, res) => {
+    console.log('Handling request to /health');
     res.status(200).json({ status: 'healthy' });
 });
 // Index endpoint
 app.get('/', (req, res) => {
+    console.log('Handling request to /');
     res.status(200).json({
         message: 'Welcome to the API',
         version: '1.0.0',

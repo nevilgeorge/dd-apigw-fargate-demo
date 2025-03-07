@@ -1,5 +1,9 @@
+import 'dd-trace/init'; // Import and initialize Datadog APM before other imports.
+
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
+import tracer from 'dd-trace';
+import util from "util";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -10,11 +14,14 @@ app.use(express.json()); // Parse JSON bodies
 
 // Health check endpoint
 app.get('/health', (req: Request, res: Response) => {
+  console.log('Handling request to /health');
   res.status(200).json({ status: 'healthy' });
 });
 
 // Index endpoint
 app.get('/', (req: Request, res: Response) => {
+  console.log('Handling request to /');
+  console.log('x-dd-apigw-request-time is', util.inspect(req.headers['x-dd-apigw-request-time']))
   res.status(200).json({
     message: 'Welcome to the API',
     version: '1.0.0',
