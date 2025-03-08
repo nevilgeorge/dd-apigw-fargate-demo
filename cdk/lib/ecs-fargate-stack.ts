@@ -19,6 +19,10 @@ https://ip-ranges.amazonaws.com/ip-ranges.json
 Cmd + F for your region and copy-paste all API Gateway IPs.
 */
 
+const DD_API_KEY = process.env.DD_API_KEY || '';
+const APP_LANGUAGE = 'js'; // Must match the directory that contains the Dockerfile. 
+const RESOURCE_ID_PREFIX = 'ApigwFargateDemo';
+const RESOURCE_NAME_PREFIX = `apigw-fargate-${APP_LANGUAGE}-demo`;
 
 export class EcsFargateStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -32,20 +36,20 @@ export class EcsFargateStack extends cdk.Stack {
     });
 
     // Create ECS Cluster
-    const cluster = new ecs.Cluster(this, 'ExpressAppCluster', {
+    const cluster = new ecs.Cluster(this, `${RESOURCE_ID_PREFIX}-AppCluster`, {
       vpc,
-      clusterName: 'nev-express-app-cluster',
+      clusterName: `${RESOURCE_NAME_PREFIX}-app-cluster`,
     });
 
     // Create Task Definition
-    const taskDefinition = new ecs.FargateTaskDefinition(this, 'ExpressAppTask', {
+    const taskDefinition = new ecs.FargateTaskDefinition(this, `${RESOURCE_ID_PREFIX}-${APP_LANGUAGE}-AppTask`, {
       memoryLimitMiB: 512,
       cpu: 256,
     });
 
     // Add service container to task definition.
-    const serviceContainer = taskDefinition.addContainer('ExpressAppContainer', {
-      image: ecs.ContainerImage.fromAsset('../app', {
+    const serviceContainer = taskDefinition.addContainer(`${RESOURCE_ID_PREFIX}-${APP_LANGUAGE}-AppContainer`, {
+      image: ecs.ContainerImage.fromAsset(`../${APP_LANGUAGE}`, {
         buildArgs: {
             PLATFORM: 'linux/amd64'
         },
@@ -55,9 +59,14 @@ export class EcsFargateStack extends cdk.Stack {
         // Set environment variables on service.
         NODE_ENV: 'production',
         DD_TRACE_DEBUG: 'true',
+        // DD_SERVICE: 'fastapi-app',
+        // DD_AGENT_HOST: 'datadog-agent',
+        DD_ENV: 'production',
+        DD_LOGS_INJECTION: 'true',
+        DD_REMOTE_CONFIGURATION_ENABLED: 'false',
         DD_TRACE_INFERRED_PROXY_SERVICES_ENABLED: 'true'
       },
-      logging: ecs.LogDrivers.awsLogs({ streamPrefix: 'Nev-ExpressApp' }),
+      logging: ecs.LogDrivers.awsLogs({ streamPrefix: `${RESOURCE_ID_PREFIX}-${APP_LANGUAGE}-App` }),
       portMappings: [
         {
           containerPort: 3000,
@@ -68,16 +77,16 @@ export class EcsFargateStack extends cdk.Stack {
     });
 
     // Add Datadog agent container to task definition.
-    const ddApiKey: string = process.env.DD_API_KEY || '';
     const datadogAgentContainer = taskDefinition.addContainer('datadog-agent', {
       image: ecs.ContainerImage.fromRegistry('public.ecr.aws/datadog/agent:latest'),
       environment: {
-        DD_API_KEY: ddApiKey,
+        DD_API_KEY: DD_API_KEY,
+        DD_APM_ENABLED: 'true',
         ECS_FARGATE: 'true',
         DD_LOG_LEVEL: 'TRACE'
       },
       logging: new ecs.AwsLogDriver({
-        streamPrefix: 'Container2',
+        streamPrefix: 'DatadogContainer',
       }),
       memoryLimitMiB: 512,
       cpu: 256,
@@ -102,29 +111,29 @@ export class EcsFargateStack extends cdk.Stack {
     // albSecurityGroup.addIngressRule(ec2.Peer.ipv4(MY_IP_ADDRESS), ec2.Port.tcp(80), 'Allow HTTP traffic');
 
     // Create Application Load Balancer (ALB)
-    const loadBalancer = new elbv2.ApplicationLoadBalancer(this, 'ExpressAppALB', {
+    const loadBalancer = new elbv2.ApplicationLoadBalancer(this, `${RESOURCE_ID_PREFIX}-AppALB`, {
       vpc,
       internetFacing: true,
       securityGroup: albSecurityGroup, // Attach the ALB security group
     });
 
     // Create a Listener on the ALB
-    const listener = loadBalancer.addListener('AlbListener', {
+    const listener = loadBalancer.addListener(`${RESOURCE_ID_PREFIX}-AlbListener`, {
       port: 80, // HTTP Listener
       open: true,
     });
 
     // Create Security Group for Fargate Service
-    const serviceSecurityGroup = new ec2.SecurityGroup(this, 'ExpressAppSecurityGroup', {
+    const serviceSecurityGroup = new ec2.SecurityGroup(this, `${RESOURCE_ID_PREFIX}-AppSecurityGroup`, {
         vpc,
         allowAllOutbound: true,
-        description: 'Express App Security Group',
+        description: `${RESOURCE_NAME_PREFIX} App Security Group`,
     }); 
     
-    serviceSecurityGroup.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(3000), 'Allow Express App traffic');
+    serviceSecurityGroup.addIngressRule(ec2.Peer.anyIpv4(), ec2.Port.tcp(3000), 'Allow App traffic');
 
     // Create Fargate Service
-    const service = new ecs.FargateService(this, 'ExpressAppService', {
+    const service = new ecs.FargateService(this, `${RESOURCE_ID_PREFIX}-AppService`, {
       cluster,
       taskDefinition,
       desiredCount: 2,
@@ -144,8 +153,8 @@ export class EcsFargateStack extends cdk.Stack {
     });
 
     // Create API Gateway
-    const api = new apigateway.RestApi(this, 'ExpressAppAPIGateway', {
-      restApiName: 'ExpressAppAPI',
+    const api = new apigateway.RestApi(this, `${RESOURCE_ID_PREFIX}-APIGateway`, {
+      restApiName: `${RESOURCE_NAME_PREFIX} API Gateway`,
       description: 'API Gateway for forwarding requests to ALB',
       deployOptions: { stageName: 'prod' },
     });
@@ -174,7 +183,7 @@ export class EcsFargateStack extends cdk.Stack {
     api.root.addMethod('ANY', integration);
 
     // Output the task public IP
-    new cdk.CfnOutput(this, 'Nev-ExpressFargateService', {
+    new cdk.CfnOutput(this, `${RESOURCE_ID_PREFIX}-FargateService`, {
       value: service.serviceName,
       description: 'Name of the Fargate service',
     });
