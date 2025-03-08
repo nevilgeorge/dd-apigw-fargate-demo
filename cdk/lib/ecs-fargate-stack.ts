@@ -55,7 +55,7 @@ export class EcsFargateStack extends cdk.Stack {
         // Set environment variables on service.
         NODE_ENV: 'production',
         DD_TRACE_DEBUG: 'true',
-        DD_TRACE_INFERRED_PROXY_SERVICES_ENABLED: 'false'
+        DD_TRACE_INFERRED_PROXY_SERVICES_ENABLED: 'true'
       },
       logging: ecs.LogDrivers.awsLogs({ streamPrefix: 'Nev-ExpressApp' }),
       portMappings: [
