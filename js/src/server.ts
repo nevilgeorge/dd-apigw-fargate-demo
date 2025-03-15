@@ -23,7 +23,7 @@ app.get('/', (req: Request, res: Response) => {
   console.log('Handling request to /');
   console.log('x-dd-apigw-request-time is', util.inspect(req.headers['x-dd-apigw-request-time']))
   res.status(200).json({
-    message: 'Welcome to the API',
+    message: 'Welcome to the Express.js API',
     version: '1.0.0',
     endpoints: {
       '/': 'This documentation',
