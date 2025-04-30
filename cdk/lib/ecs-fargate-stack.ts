@@ -59,12 +59,14 @@ export class EcsFargateStack extends cdk.Stack {
         // Set environment variables on service.
         NODE_ENV: 'production',
         DD_TRACE_DEBUG: 'true',
-        // DD_SERVICE: 'fastapi-app',
+        DD_SERVICE: 'fargate-express-app',
         // DD_AGENT_HOST: 'datadog-agent',
         DD_ENV: 'production',
         DD_LOGS_INJECTION: 'true',
         DD_REMOTE_CONFIGURATION_ENABLED: 'false',
-        DD_TRACE_INFERRED_PROXY_SERVICES_ENABLED: 'true'
+        DD_TRACE_INFERRED_PROXY_SERVICES_ENABLED: 'true',
+        // DD_TRACE_SAMPLING_RULES: '[{"service": "fargate-express-app", "sample_rate": 0.5}]', // <-- Doesn't work.
+        // DD_TRACE_SAMPLING_RULES: '[{"service": "eladeov5al.execute-api.ap-northeast-1.amazonaws.com", "sample_rate": 0.5}]', // <-- Does work.
       },
       logging: ecs.LogDrivers.awsLogs({ streamPrefix: `${RESOURCE_ID_PREFIX_CAMEL_CASE}-${APP_LANGUAGE}-App` }),
       portMappings: [
