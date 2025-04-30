@@ -67,6 +67,7 @@ export class EcsFargateStack extends cdk.Stack {
         DD_TRACE_INFERRED_PROXY_SERVICES_ENABLED: 'true',
         // DD_TRACE_SAMPLING_RULES: '[{"service": "fargate-express-app", "sample_rate": 0.5}]', // <-- Doesn't work.
         // DD_TRACE_SAMPLING_RULES: '[{"service": "eladeov5al.execute-api.ap-northeast-1.amazonaws.com", "sample_rate": 0.5}]', // <-- Does work.
+        DD_TRACE_SAMPLING_RULES: '[{"service": "fargate-express-app", "resource": "GET /health", "sample_rate": 0.01}]',
       },
       logging: ecs.LogDrivers.awsLogs({ streamPrefix: `${RESOURCE_ID_PREFIX_CAMEL_CASE}-${APP_LANGUAGE}-App` }),
       portMappings: [
